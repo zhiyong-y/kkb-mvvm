@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    let obj = {};
+    let defineReactive = (obj, key, value) => {
+        // obj 传入对象； key监听的属性； value初始值；
+        // 拦截传入的参数，进行判断，是否发生数据变化
+        // defindReactive对数组的拦截无效，需要修改原型
+        Object.defineProperty(obj, key, {
+            get() {
+                console.log('get: ' + key);
+                return value;
+            },
+            set(newValue) {
+                if (newValue !== value) {
+                    console.log('set: ' + key + ', value: ' + newValue);
+                    value = newValue;
+                    update();
+                }
+            }
+        })
+    }
+    var update = function () {
+        app.innerText = obj.foo;
+    }
+
+    defineReactive(obj, 'foo', '');
+    obj.foo = new Date().toLocaleTimeString()
+    setInterval(() => {
+        obj.foo = new Date().toLocaleTimeString()
+    }, 1000);
+</script>
+
+</html>

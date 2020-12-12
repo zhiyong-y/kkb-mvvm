@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./03.Compiler.js"></script>
+    <script src="./03.kvue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{counter}}</p>
+        <p k-text="counter"></p>
+        <p k-html="str" k-on:click="aa"></p>
+    </div>
+</body>
+<script>
+    const app = new kVue({
+        el: '#app',
+        data: {
+            counter: 0,
+            str: '<span style="color: red">我是html代码</span>'
+        },
+        methods: {
+            aa() {
+                alert(1)
+            }
+        },
+    })
+
+    setInterval(() => {
+        // 需要做代理，简化写法
+        // app.$data.counter++
+        app.counter++
+    }, 1000);
+
+    // console.log(app);
+</script>
+
+</html>
